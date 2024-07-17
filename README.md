@@ -1,4 +1,3 @@
-### Тестовый проект 
 
 [![Typing SVG](https://readme-typing-svg.herokuapp.com?color=%2336BCF7&lines=Test+Project)](https://git.io/typing-svg)
 
