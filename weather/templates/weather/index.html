@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+{% if request.user.is_authenticated %}
+
+
+<div class="containermx-auto max-w-xl p-6">
+    <div class="bg-gray-100  p-6 rounded-lg shadow-lg">
+      
+        <h1 class="text-2xl font-semibold mb-4"> Приветствую тебя {{ request.user.username }}!</h1>
+        <h2 class="text-2xl font-semibold mb-4">Введите название города, чтобы узнать погоду.</h2>
+        <form method="post" action="{% url 'add_city' %}" class="mb-4">
+            {% csrf_token %}
+            <div class="mb-4">
+                
+                <input type="text" id="coupon" name="city" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500 focus:border-blue-500" placeholder="Название города...">
+            </div>
+
+  
+            
+        <div class="text-center">
+            <button  type="submit" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+                Получить прогноз
+            </button>
+            <a href="{% url 'logout' %}">
+                Выйти
+            </a>
+        </div>
+        <div class="mt-4 text-red-500">
+        {% for city, data in weather_data.items %}
+                
+                <ul class="space-y-3  text-lg border border-2 border-indigo-400 rounded-lg p-5">
+                    <li class="flex space-x-3">
+                      <svg class="flex-shrink-0 h-6 w-6 text-blue-600" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11.5219 4.0949C11.7604 3.81436 12.181 3.78025 12.4617 4.01871C12.7422 4.25717 12.7763 4.6779 12.5378 4.95844L6.87116 11.6251C6.62896 11.91 6.1998 11.94 5.9203 11.6916L2.9203 9.02494C2.64511 8.78033 2.62032 8.35894 2.86493 8.08375C3.10955 7.80856 3.53092 7.78378 3.80611 8.02839L6.29667 10.2423L11.5219 4.0949Z" fill="currentColor"/>
+                      </svg>
+                      <span class="text-slate-900">
+                        {{ city }}
+                        <p class="text-green-400">Текущая температура: <strong>{{ data.current.temperature_2m }}°C</p>
+                        <p class="text-red-400">Максимальная температура: {{ data.daily.temperature_2m_max.0 }}°C</p>
+                        <p class="text-blue-500">Минимальная температура: {{ data.daily.temperature_2m_min.0 }}°C</p>
+                        <p class="text-gray-400">Сумма осадков: {{ data.daily.precipitation_sum.0 }} мм</p>
+                      </span>
+                    </li>
+                    
+                </ul>
+        {% endfor %}
+        </div>
+
+
+        <div class="mt-4 text-green-500">
+            {% if cities %}
+            Сохраненные города
+            <ul class="mt-2 text-green-400">
+                {% for city in cities %}
+                    <li class="mb-2">{{ city.name }} : {{city.search_count}}</li>
+                   
+                {% endfor %}
+            </ul>
+            {% else %}
+            История пустая
+            {% endif %}
+        
+        </div>
+    </div>
+</div>
+
+{% endif %}
+{% endblock %}

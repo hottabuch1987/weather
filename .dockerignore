@@ -1,0 +1,13 @@
+# Игнорировать файлы и каталоги, которые не нужны в контейнере
+.git
+*.pyc
+*.pyo
+*.pyd
+__pycache__
+node_modules
+*.log
+*.pot
+*.po
+*.mo
+*.bak
+.DS_Store

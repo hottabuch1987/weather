@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="bg-green-200 min-h-screen flex items-center">
+  <div class="bg-white p-10 md:w-2/3 lg:w-1/2 mx-auto rounded">
+    <h3 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-400 md:text-3xl lg:text-3xl dark:text-white">Войти</h3>
+    
+      <form method="post" action=".">
+        {% csrf_token %}
+
+          <div class="flex items-center mb-5">
+              <label for="username" class="w-20 inline-block text-right mr-4 text-gray-500 text-gray-500">Логин</label>
+              <input name="username" id="username" type="text" placeholder="Логин" class="border-b-2 border-gray-400 flex-1 py-2 placeholder-gray-300 outline-none focus:border-green-400" required>
+          </div>
+
+          <div class="flex items-center mb-10">
+              <label for="password" class="w-20 inline-block text-right mr-4 text-gray-500 text-gray-500">Пароль</label>
+              <input type="password" name="password" id="password" placeholder="Пароль" class="border-b-2 border-gray-400 flex-1 py-2 placeholder-gray-300 outline-none focus:border-green-400" required>
+          </div>
+          <div class="text-right">
+              
+              <input type="submit" class="py-3 px-8 bg-green-500 text-green-100 font-bold rounded" value="Отправить">
+          </div>
+          <a class="text-blue-500" href='{% url "register" %}'>Регистрация</a>
+          {% if form.non_field_errors %}
+            <p>{{form.non_field_errors }}</p>
+          {% endif %}
+      </form>
+      
+  </div>
+</div>
+{% endblock content %}
+
